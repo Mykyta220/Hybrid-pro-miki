@@ -1,0 +1,94 @@
+openapi: 3.0.1
+info:
+  title: Hybrid Pro Miki API
+  description: REST API for Hybrid Pro Miki AI trading agent on BNB Chain.
+  version: 1.0.0
+servers:
+  - url: https://run.mocky.io/v3/0cf67a92-b6e1-4430-a0e7-19f6fc3f4129
+    description: Mock API for testing
+paths:
+  /analyze:
+    post:
+      summary: Analyze BNB Chain trends
+      operationId: analyzeTrends
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                walletAddress:
+                  type: string
+                  example: "0x1234567890abcdef"
+                timeframe:
+                  type: string
+                  example: "7d"
+      responses:
+        '200':
+          description: Successful analysis
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  insights:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "High volume on BNB/USDT"
+                      - "Whale activity detected on CAKE"
+  /strategy:
+    get:
+      summary: Generate investment strategy
+      operationId: generateStrategy
+      parameters:
+        - name: riskLevel
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [low, medium, high]
+      responses:
+        '200':
+          description: Strategy generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  strategy:
+                    type: string
+                    example: "Buy BNB at $300, sell at $340"
+  /execute:
+    post:
+      summary: Simulate trade execution
+      operationId: simulateExecution
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entryPoint:
+                  type: number
+                  example: 300
+                exitPoint:
+                  type: number
+                  example: 340
+      responses:
+        '200':
+          description: Execution simulated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  gasUsed:
+                    type: number
+                    example: 0.0021
